@@ -37,8 +37,7 @@ function containsKeyword(text: string): boolean {
  * contentSnippet(태그 제거된 본문 요약) 우선, 없으면 summary, content 순으로 사용한다.
  */
 function extractSummary(item: FeedItem): string {
-  const raw =
-    item.contentSnippet ?? item.summary ?? item.content ?? item.description ?? "";
+const raw = item.contentSnippet ?? item.summary ?? item.content ?? "";
   return raw.trim();
 }
 

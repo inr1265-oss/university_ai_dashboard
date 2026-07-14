@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# next.js build output (매번 빌드 시 자동 생성됨, 커밋 불필요)
+.next/
+out/
+
+# env files (시크릿 포함, 절대 커밋 금지)
+.env
+.env.local
+.env*.local
+
+# misc
+*.log

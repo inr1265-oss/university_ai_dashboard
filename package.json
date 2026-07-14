@@ -1,0 +1,37 @@
+{
+  "name": "unn-ai-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "한국대학신문 AI/AIDX 관련 기사 수집·분류·요약 대시보드",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "fetch:rss": "tsx scripts/fetch-and-filter-rss.ts",
+    "collect": "tsx scripts/collect-articles.ts",
+    "summarize": "tsx scripts/summarize-articles.ts",
+    "pipeline": "tsx scripts/run-pipeline.ts"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.0",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

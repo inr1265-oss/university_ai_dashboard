@@ -31,7 +31,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <article className="flex h-full flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5">
       <div className="flex items-center justify-between gap-2">
-        <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+        <span className="inline-flex items-center rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700">
           {article.category}
         </span>
         <time
@@ -58,7 +58,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         href={article.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-1 inline-flex w-fit items-center text-sm font-medium text-blue-600 hover:text-blue-800"
+        className="mt-1 inline-flex w-fit items-center text-sm font-medium text-brand-600 hover:text-brand-800"
       >
         원문 보기
         <span aria-hidden="true" className="ml-1">

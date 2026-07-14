@@ -1,6 +1,7 @@
 import CategoryTabs from "../components/CategoryTabs";
 import ArticleCard from "../components/ArticleCard";
 import Pagination from "../components/Pagination";
+import Logo from "../components/Logo";
 import { getPublishedArticles, type GetPublishedArticlesResult } from "../lib/db/articles";
 import { isCategory } from "../lib/summarize/categories";
 
@@ -39,13 +40,17 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
-      <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
-          한국대학신문 AI/AIDX 기사 대시보드
-        </h1>
-        <p className="mt-1 text-sm text-gray-500">
-          AIDX, AID, AI, 인공지능, 디지털전환 관련 기사를 자동으로 모아 요약합니다.
-        </p>
+      <header className="mb-6 flex items-center gap-3 sm:mb-8">
+        {/* public/logo.png 파일을 추가하면 이 자리에 신성대학교 로고가 표시된다. */}
+        <Logo />
+        <div>
+          <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
+            신성대학교 AI/AIDX 대시보드
+          </h1>
+          <p className="mt-1 text-sm text-gray-500">
+            한국대학신문에서 AIDX, AID, AI, 인공지능, 디지털전환 관련 기사를 자동으로 모아 요약합니다.
+          </p>
+        </div>
       </header>
 
       <CategoryTabs activeCategory={activeCategory} />

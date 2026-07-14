@@ -18,7 +18,7 @@ export default function Logo() {
     <img
       src="/logo.png"
       alt="신성대학교 로고"
-      className="h-9 w-9 shrink-0 rounded sm:h-11 sm:w-11"
+      className="h-10 w-auto shrink-0 object-contain sm:h-12"
       onError={() => setHidden(true)}
     />
   );

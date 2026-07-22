@@ -1,0 +1,45 @@
+name: Crawl UNN articles
+
+# 매일 한국 시간(KST, UTC+9) 08:00, 18:00에 실행된다.
+# GitHub Actions cron은 UTC 기준이라 KST에서 9시간을 뺀 시각으로 지정한다.
+#   08:00 KST == 전날 23:00 UTC -> "0 23 * * *"
+#   18:00 KST == 당일 09:00 UTC -> "0 9 * * *"
+# 참고: GitHub Actions의 scheduled workflow는 부하가 몰리는 시간대에는
+# 몇 분에서 몇십 분까지 지연될 수 있다 (정시 실행을 100% 보장하지 않음).
+on:
+  schedule:
+    - cron: "0 23 * * *" # 08:00 KST
+    - cron: "0 9 * * *" # 18:00 KST
+  # Actions 탭에서 수동으로도 즉시 실행해볼 수 있게 해준다.
+  workflow_dispatch: {}
+
+# 이전 실행이 아직 끝나지 않았으면 새 실행을 큐에 대기시킨다
+# (동시 실행으로 인한 중복 Gemini API 호출/DB 경쟁을 줄이기 위함).
+concurrency:
+  group: unn-ai-crawl
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          # package-lock.json을 커밋한 뒤에는 `cache: npm`을 추가하고
+          # 아래 `npm install`을 `npm ci`로 바꾸면 설치 속도를 더 높일 수 있다.
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run crawl -> save -> summarize pipeline
+        run: npm run pipeline
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

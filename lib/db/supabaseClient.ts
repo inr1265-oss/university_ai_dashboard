@@ -7,6 +7,7 @@
  */
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import WebSocket from "ws";
 
 let cachedClient: SupabaseClient | null = null;
 
@@ -32,6 +33,18 @@ export function getSupabaseClient(): SupabaseClient {
   try {
     cachedClient = createClient(supabaseUrl, supabaseKey, {
       auth: { persistSession: false },
+      // 최신 @supabase/supabase-js는 클라이언트 생성 시점에 native WebSocket을
+      // 확인하는데, Node.js 버전/실행 환경에 따라(특히 GitHub Actions의
+      // ubuntu-latest 러너) 이 감지가 실패해 "native WebSocket not found"
+      // 에러로 클라이언트 생성 자체가 죽는 경우가 있다. 이 프로젝트는 realtime
+      // 기능을 쓰지 않지만, ws 패키지를 명시적으로 넘겨 감지 문제를 우회한다.
+      realtime: {
+        // ws 패키지와 브라우저 표준 WebSocket 간 타입이 완전히 일치하지 않아
+        // 이 한 줄만 예외적으로 캐스팅한다 (CLAUDE.md의 any 지양 원칙에 대한
+        // 의도적인 예외 — 라이브러리 타입 정의 한계로 인한 것).
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transport: WebSocket as any,
+      },
     });
   } catch (error) {
     if (error instanceof Error) {
